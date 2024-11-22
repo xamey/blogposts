@@ -11,7 +11,7 @@ From a simple prompt, you can generate a fully functional Javascript-based codeb
 
 In order to make sure it works at the first try (it can be buggy at times), I've decided to use React. I wanted to try out Astro so badly, as it's quite new I was afraid it might not work, but code ran at first try.
 
-<img src="https://github.com/xamey/blogposts/blob/main/imgs/bolt2.png?raw=true" alt="bolt.new" width="500" height="auto"/>
+![boltnew](https://github.com/xamey/blogposts/blob/main/imgs/bolt2.png?raw=true)
 
 _This is the landing page. You can even chose an pre-existing stack._
 
@@ -27,7 +27,7 @@ I've used Cursor.sh for a few months now, and I'm amazed by the quality of the a
 
 I've used it to iterate on the design of this website, which I'm pretty happy with.
 
-<img src="https://github.com/xamey/blogposts/blob/main/imgs/composer-cursor.png?raw=true" alt="cursor.sh" width="500" height="auto"/>
+![boltnew](https://github.com/xamey/blogposts/blob/main/imgs/composer-cursor.png?raw=true)
 
 _This is the Composer feature UI. A small window at the bottom of your IDE._
 
