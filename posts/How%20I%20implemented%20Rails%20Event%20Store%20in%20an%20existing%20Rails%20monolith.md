@@ -2,7 +2,7 @@ If you don't know about Rails Event Store gem, you can check it out [here](https
 
 ## Our current architecture
 
-In my day-to-day job at Sêmeia, our monolith has grown over the years as we expanded our product offering, and adding one feature means adding either new models or existing models evolving.
+In my day-to-day job at Semeia, our monolith has grown over the years as we expanded our product offering, and adding one feature means adding either new models or existing models evolving.
 We currently use parts of the Event Sourcing pattern, as most of our records in database are what we may call "events": when an user does a CRUD operation through our UI, an event is created. It may be a new model, which is in fact the very first event for a specific user, or it can be what we could call an "update" event: an event is created with the latest updated, while we consider the previous one soft-deleted.
 
 The tricky part is that we may react to event creations/updates: imagine sending an email to an user right after its creation. The easy way is to use [ActiveRecord callbacks](https://guides.rubyonrails.org/active_record_callbacks.html) such as `after_create` or `after_update`. An example below:
