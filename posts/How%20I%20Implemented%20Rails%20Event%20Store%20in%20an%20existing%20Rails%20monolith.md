@@ -41,11 +41,11 @@ That way:
 - The `SendEmailAfterUserCreationEventHandler` is responsible for sending an email, holds a minimal amount of business logic, and can be easily maintained, tested and reused.
 - We can easily react to the `UserCreated` event in a different way considering the context, by creating different handlers.
 
-And voilà!
+And voila!
 
 In order to implemented this pattern, we needed to define a few things to automatically generate the events that will be caught by the handlers, and how the handlers are defined.
 
-### Trigger the events
+## Trigger the events
 
 ```ruby
 module TriggersEvent
@@ -99,7 +99,7 @@ class User < ApplicationRecord
 end
 ```
 
-### Define the handlers
+## Define the handlers
 
 Then, let's talk about the "sub" part.
 
@@ -119,7 +119,7 @@ For more information about he RailsEventStore::Event class, you can check [the s
 
 A handler can also be asynchronous, I let you check [the documentation](https://railseventstore.org/docs/v2/subscribe/#async-handlers) for more information.
 
-### Defining the publishers-subscribers mapping
+## Defining the publishers-subscribers mapping
 
 We defined an initializer that will do the following:
 
