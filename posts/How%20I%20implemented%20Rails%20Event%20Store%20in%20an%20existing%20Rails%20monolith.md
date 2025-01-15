@@ -3,9 +3,9 @@ If you don't know about Rails Event Store gem, you can check it out [here](https
 ## Our current architecture
 
 In my day-to-day job at Semeia, our monolith has grown over the years as we expanded our product offering, and adding one feature means adding either new models or existing models evolving.
-We currently use parts of the Event Sourcing pattern, as most of our records in database are what we may call "events": when an user does a CRUD operation through our UI, an event is created. It may be a new model, which is in fact the very first event for a specific user, or it can be what we could call an "update" event: an event is created with the latest updated, while we consider the previous one soft-deleted.
+We currently use parts of the Event Sourcing pattern, as most of our records in database are what we may call "user events": when an user does a CRUD operation through our UI, an "user event" is created. It may be a new record, which is in fact the very first "user event" for a specific user, or it can be what we could call an "update": an "user event" is created with the latest updates, while we consider the previous ones soft-deleted.
 
-The tricky part is that we may react to event creations/updates: imagine sending an email to an user right after its creation. The easy way is to use [ActiveRecord callbacks](https://guides.rubyonrails.org/active_record_callbacks.html) such as `after_create` or `after_update`. An example below:
+The tricky part is that we may react to "user events" creations/updates: imagine sending an email to an user right after its creation. The easy way is to use [ActiveRecord callbacks](https://guides.rubyonrails.org/active_record_callbacks.html) such as `after_create` or `after_update`. An example below:
 
 ```ruby
 class User < ApplicationRecord
@@ -17,9 +17,9 @@ end
 
 It works... but I don't find it satisfying for a few reasons:
 
-- It's not the responsibility of the model to react to its creation: a model should only be aware of its attributes and its relationships. Callbacks should be used to compute derived attributes, not to react to events. In that way, the model shouldn't be aware of an action which is not related to its attributes and that should happen after its creation.
+- It's not the responsibility of the model to react to its creation: a model should only be aware of its attributes and its relationships. Callbacks should be used to compute derived attributes, not to react to other "user events". In that way, the model shouldn't be aware of an action which is not related to its attributes and that should happen after its creation.
 - Multiple business logic are highly coupled: an unit related to a "User" feature shouldn't be aware of a "Mailer" feature, it lacks of separation of concerns.
-- We may use concerns to decouple model from side-effects, but in the end, the model still holds the business logic: what if we want to react to an event in a different way considering the context? We must implement either different concerns, or complexify implementation that end up being in the model, while we could use _adapters_. Wack!
+- We may use concerns to decouple model from side-effects, but in the end, the model still holds the business logic: what if we want to react to an "user event" in a different way considering the context? We must implement either different concerns, or complexify implementation that end up being in the model, while we could use _adapters_. Wack!
 
 ![problem-architecture-coupling](https://github.com/xamey/blogposts/blob/main/imgs/problem-architecture-coupling.png?raw=true)
 
