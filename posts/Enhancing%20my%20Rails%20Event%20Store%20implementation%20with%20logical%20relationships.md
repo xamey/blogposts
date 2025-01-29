@@ -141,6 +141,7 @@ And that's it! I can now navigate through the causal graph of my application, an
 Whole code is available below :
 
 ```ruby
+# app/handlers/concerns/handler_common.rb
 module HandlerCommon
   extend ActiveSupport::Concern
 
@@ -153,6 +154,7 @@ end
 ```
 
 ```ruby
+# app/handlers/any_handler.rb
 # This is an example of a handler that reacts to an event
 class AnyHandler
   include HandlerCommon
@@ -164,6 +166,33 @@ end
 ```
 
 ```ruby
+# config/initializers/rails_event_store.rb
+require "rails_event_store"
+
+Rails.configuration.to_prepare do
+  Rails.configuration.event_store =
+    event_store =
+      RailsEventStore::Client.new
+  event_store.subscribe_to_all_events(RailsEventStore::LinkByCorrelationId.new)
+  event_store.subscribe_to_all_events(RailsEventStore::LinkByCausationId.new)
+
+  handlers = {
+    AnyHandler => %w[UserCreated]
+  }
+
+  handlers.each do |handler, events|
+    events.each do |event|
+      new_class = Class.new(RailsEventStore::Event)
+      Object.const_set(event, new_class) if !Object.const_defined?(event)
+    end
+
+    event_store.subscribe(handler, to: events)
+  end
+end
+```
+
+```ruby
+# app/models/concerns/triggers_event.rb
 module TriggersEvent
   extend ActiveSupport::Concern
 
@@ -228,6 +257,7 @@ end
 ```
 
 ```ruby
+# app/models/application_record.rb
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
