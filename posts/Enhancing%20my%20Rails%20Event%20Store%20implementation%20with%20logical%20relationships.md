@@ -6,7 +6,7 @@ Perhaps, it was missing logical relationship between ActiveRecord models that we
 To give a quick overview, I've added callbacks that can be executed from any ActiveRecord model that includes the right concern.
 When the ActiveRecord is created or updated, an event is triggered, either about the creation or the update of the ActiveRecord.
 
-![rails-event-store-architecture](https://github.com/xamey/blogposts/blob/main/imgs/rails-event-store-architecture.png?raw=true)
+![rails-event-store-current-architecture](https://github.com/xamey/blogposts/blob/main/imgs/rails-event-store-current-architecture.png?raw=true)
 
 This is encapsulated in a concern, so it holds all the logic in one place, easing maintenance and testing.
 
